@@ -4,31 +4,32 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class Show {
+    private static int incrementer = 1;
     private String showId;
     private LocalDateTime createdOn;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private Screen screen;
-    private Movie movie;
-    private Theatre theatre;
-    private List<Booking> bookingList;
+    private String  screenId;
+    private String movieId;
+    private String  theatreId;
+    private List<String> bookingIdList;
 
-    public Show(String showId,LocalDateTime startTime, LocalDateTime endTime, Movie movie, Screen screen, Theatre theatre) {
-        this.showId = showId;
+    public Show(LocalDateTime startTime, LocalDateTime endTime, String movieId,String screenId, String theatreId) {
+        this.showId = "SHOW "+incrementer++;
         this.startTime = startTime;
         this.endTime = endTime;
         createdOn = LocalDateTime.now();
-        this.movie = movie;
-        this.screen = screen;
-        this.theatre = theatre;
+        this.movieId = movieId;
+        this.screenId = screenId;
+        this.theatreId = theatreId;
     }
 
-    public Screen getScreen() {
-        return screen;
+    public String getScreenId() {
+        return screenId;
     }
 
-    public void setScreen(Screen screen) {
-        this.screen = screen;
+    public void setScreenId(String screenId) {
+        this.screenId = screenId;
     }
 
     public LocalDateTime getCreatedOn() {
@@ -51,19 +52,11 @@ public class Show {
         this.endTime = endTime;
     }
 
-    public Movie getMovie() {
-        return movie;
+    public String getMovieId() {
+        return movieId;
     }
 
     public String getShowId() {
         return showId;
-    }
-
-    public String toString() {
-        return getScreen().getHallId();
-    }
-
-    public void addSeatsBooked(){
-
     }
 }

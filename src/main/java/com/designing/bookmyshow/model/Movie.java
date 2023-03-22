@@ -22,6 +22,10 @@ public class Movie {
         return duratonInMin;
     }
 
+    public String getMovieId() {
+        return movieId;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +

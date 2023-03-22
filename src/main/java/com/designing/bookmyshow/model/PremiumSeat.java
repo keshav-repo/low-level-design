@@ -2,8 +2,8 @@ package com.designing.bookmyshow.model;
 
 public class PremiumSeat extends Seat {
 
-    public PremiumSeat(int seatId, int rowNo) {
-        super(seatId, rowNo);
+    public PremiumSeat(String screenId, int seatId, int rowNo) {
+        super(screenId, seatId, rowNo);
     }
     @Override
     public double getPrice() {

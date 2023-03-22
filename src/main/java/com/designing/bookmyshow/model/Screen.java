@@ -4,32 +4,27 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Screen {
+    private static int incrementer = 1;
+    private String screenId;
+    private String theatreId;
+    List<String> seatIdList;
 
-    private String hallId;
-
-    List<Seat> seatsList;
-
-    public Screen(String hallId) {
-        this.hallId = hallId;
-        this.seatsList = new LinkedList<>();
+    public Screen(String theatreId) {
+        this.screenId = "SCREEN "+incrementer++;
+        this.theatreId = theatreId;
+        this.seatIdList = new LinkedList<>();
     }
 
-    public String getHallId() {
-        return hallId;
+    public String getScreenId() {
+        return screenId;
     }
 
-    public List<Seat> getSeatsList() {
-        return seatsList;
+    public List<String> getSeatIdList() {
+        return seatIdList;
     }
 
-    public void addSeats(Seat seat){
-        this.seatsList.add(seat);
+    public void addSeatIdList(String seatId) {
+        this.seatIdList.add(seatId);
     }
 
-    @Override
-    public String toString() {
-        return "Screen{" +
-                "hallId='" + hallId + '\'' +
-                '}';
-    }
 }

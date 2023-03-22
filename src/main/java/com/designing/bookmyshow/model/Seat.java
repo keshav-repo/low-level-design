@@ -1,26 +1,19 @@
 package com.designing.bookmyshow.model;
 
-import java.util.UUID;
-
 public abstract class Seat {
+    private static int incrementer = 1;
     private String seatId;
-
-    private int seatNumber;
     private int rowNo;
+    private int colNo;
+    private int screenId;
 
-    private boolean isBooked;
-
-    public Seat(int seatId, int rowNo) {
-        this.seatId = UUID.randomUUID().toString();
+    public Seat( String screenId, int colNo,int rowNo) {
+        this.seatId = "SEAT "+incrementer;
         this.rowNo = rowNo;
+        this.colNo = colNo;
+        this.seatId = screenId;
     }
-
     public abstract double getPrice();
-
-    public int getSeatNumber() {
-        return seatNumber;
-    }
-
     public String getSeatId() {
         return seatId;
     }
@@ -28,6 +21,9 @@ public abstract class Seat {
         return rowNo;
     }
 
+    public int getColNo() {
+        return colNo;
+    }
     @Override
     public String toString() {
         return "Seat{" +

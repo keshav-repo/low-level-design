@@ -2,8 +2,8 @@ package com.designing.bookmyshow.model;
 
 public class RegularSeat extends Seat {
 
-    public RegularSeat(int seatId, int rowNo) {
-        super(seatId, rowNo);
+    public RegularSeat(String screenId,int seatId, int rowNo) {
+        super(screenId,seatId, rowNo);
     }
 
     @Override

@@ -12,14 +12,14 @@ import java.util.Map;
 public class MovieService {
     Map<String, Movie> movieList = new HashMap<>();
 
-
-    public void createMovie(String movieName, int duration){
+    public Movie createMovie(String movieName, int duration){
         Movie movie = new Movie(movieName, duration);
-        movieList.put(movieName, movie);
+        movieList.put(movie.getMovieId(), movie);
+        return movie;
     }
 
-    public Movie getMovie(String name){
-        return movieList.get(name);
+    public Movie getMovie(String movieId){
+        return movieList.get(movieId);
     }
 
 
