@@ -1,0 +1,118 @@
+@startuml
+class com.designing.splitwise.model.expense.ExactExpense {
++ boolean validate()
+}
+class com.designing.splitwise.model.expense.EqualExpense {
++ boolean validate()
+}
+class com.designing.splitwise.model.expense.PercentageExpense {
++ boolean validate()
+}
+class com.designing.splitwise.service.ExpenseService {
++ {static} Expense createExpense(ExpenseType,double,User,List<Split>,ExpenseData)
+}
+enum com.designing.splitwise.model.ExpenseType {
++  EQUAL
++  EXACT
++  PERCENT
+- String expense
+- {static} HashMap<String,ExpenseType> map
++ String toString()
++ {static} ExpenseType of(String)
+}
+class com.designing.splitwise.Main {
++ {static} void main(String[])
+}
+class com.designing.splitwise.model.split.ExactSplit {
+}
+class com.designing.splitwise.repository.ExpenseRepository {
+~ List<Expense> expenses
+~ Map<String,User> userMap
+~ Map<String,Map<String,Double>> balanceSheet
++ void addUser(User)
++ User getUser(String)
++ void addExpense(ExpenseType,double,String,List<Split>,ExpenseData)
++ List<String> getBalance(String)
++ List<String> getBalances()
+- String checkSign(String,String,double)
+}
+class com.designing.splitwise.model.User {
+~ int userId
+~ String userName
+~ String email
+~ String mobileNumber
++ int getUserId()
++ void setUserId(int)
++ String getUserName()
++ void setUserName(String)
++ String getEmail()
++ void setEmail(String)
++ String getMobileNumber()
++ void setMobileNumber(String)
+}
+class com.designing.splitwise.service.SplitWiseService {
+~ ExpenseRepository expenseRepository
++ void addExpense(ExpenseType,double,String,List<Split>,ExpenseData)
++ void showBalance(String)
++ void showBalances()
+}
+abstract class com.designing.splitwise.model.split.Split {
+- User user
+~ double amount
++ User getUser()
++ void setUser(User)
++ double getAmount()
++ void setAmount(double)
+}
+class com.designing.splitwise.model.split.EqualSplit {
+}
+class com.designing.splitwise.model.expense.ExpenseData {
+- String name
++ String getName()
++ void setName(String)
+}
+class com.designing.splitwise.service.UserService {
+~ ExpenseRepository expenseRepository
++ void addUser(User)
++ User getUser(String)
+}
+class com.designing.splitwise.model.split.PercentSplit {
+~ double percent
++ double getPercent()
++ void setPercent(double)
+}
+abstract class com.designing.splitwise.model.expense.Expense {
+- String id
+- double amount
+- User expensePaidBy
+- List<Split> splits
+- ExpenseData expenseData
++ String getId()
++ double getAmount()
++ void setAmount(double)
++ User getExpensePaidBy()
++ void setExpensePaidBy(User)
++ List<Split> getSplits()
++ void setSplits(List<Split>)
++ ExpenseData getExpenseData()
++ void setExpenseData(ExpenseData)
++ {abstract}boolean validate()
+}
+enum com.designing.splitwise.model.Type {
++  EXPENSE
++  SHOW
++  QUIT
+- String name
+- {static} HashMap<String,Type> map
++ String toString()
++ {static} Type of(String)
+}
+
+
+com.designing.splitwise.model.expense.Expense <|-- com.designing.splitwise.model.expense.ExactExpense
+com.designing.splitwise.model.expense.Expense <|-- com.designing.splitwise.model.expense.EqualExpense
+com.designing.splitwise.model.expense.Expense <|-- com.designing.splitwise.model.expense.PercentageExpense
+com.designing.splitwise.model.split.Split <|-- com.designing.splitwise.model.split.ExactSplit
+com.designing.splitwise.model.split.Split <|-- com.designing.splitwise.model.split.EqualSplit
+com.designing.splitwise.model.split.Split <|-- com.designing.splitwise.model.split.PercentSplit
+@enduml

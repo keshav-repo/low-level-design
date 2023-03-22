@@ -1,0 +1,139 @@
+@startuml
+enum com.designing.bookmyshow.model.BookingStatus {
++  CONFIRMED
++  EXPIRED
++  CREATED
+}
+class com.designing.bookmyshow.model.PremiumSeat {
++ double getPrice()
+}
+interface com.designing.bookmyshow.model.Search {
++ List<Show> searchByTitle()
++ List<Show> searchByLanguage()
++ List<Show> searchByCity()
+}
+class com.designing.bookmyshow.model.UserNamePasswordAuth {
+- UserNamePasswordInput userNamePasswordInput
++ boolean validateAccount(AuthInput)
++ String getUserName()
+}
+class com.designing.bookmyshow.model.Person {
+- String name
+- Address address
+- String email
+- String phone
+- Auth auth
++ boolean validatePerson(AuthInput)
++ void setName(String)
++ Address getAddress()
++ void setAddress(Address)
++ String getEmail()
++ void setEmail(String)
++ String getPhone()
++ void setPhone(String)
++ String getName()
++ String getUserName()
+}
+class com.designing.bookmyshow.model.Movie {
+- String movieName
+- int duratonInMin
++ String getMovieName()
++ int getDuratonInMin()
+}
+class com.designing.bookmyshow.model.Booking {
+- String bookingId
+- Show show
+- List<Seat> seatsBooked
+- Customer customer
+- BookingStatus bookingStatus
++ String printTicket()
+}
+class com.designing.bookmyshow.model.Screen {
+- String hallId
+~ List<Seat> seatsList
++ String getHallId()
++ List<Seat> getSeatsList()
++ void addSeats(Seat)
++ String toString()
+}
+class com.designing.bookmyshow.model.UserNamePasswordInput {
+- char[] password
++ char[] getPassword()
++ void setPassword(char[])
+}
+abstract class com.designing.bookmyshow.model.Seat {
+- String seatId
+- int seatNumber
+- int rowNo
+- boolean isBooked
++ {abstract}double getPrice()
++ int getSeatNumber()
++ String getSeatId()
++ int getRowNo()
++ String toString()
+}
+class com.designing.bookmyshow.model.Address {
+~ String addressLine1
+~ String addressLine2
+~ String city
++ String getAddressLine1()
++ void setAddressLine1(String)
++ String getAddressLine2()
++ void setAddressLine2(String)
++ String getCity()
++ void setCity(String)
+}
+class com.designing.bookmyshow.model.RegularSeat {
++ double getPrice()
+}
+abstract class com.designing.bookmyshow.model.AuthInput {
+- String userName
++ String getUserName()
+}
+class com.designing.bookmyshow.model.Show {
+- String showId
+- LocalDateTime createdOn
+- LocalDateTime startTime
+- LocalDateTime endTime
+- Screen screen
+- Movie movie
+- List<Seat> seatList
+- Theatre theatre
+- List<Booking> bookingList
++ Screen getScreen()
++ void setScreen(Screen)
++ LocalDateTime getCreatedOn()
++ LocalDateTime getStartTime()
++ LocalDateTime getEndTime()
++ void setStartTime(LocalDateTime)
++ void setEndTime(LocalDateTime)
++ Movie getMovie()
++ String getShowId()
++ String toString()
+}
+class com.designing.bookmyshow.model.Customer {
++ void makeBooking()
++ void getBooking()
+}
+abstract class com.designing.bookmyshow.model.Auth {
+- AuthInput authInput
++ {abstract}boolean validateAccount(AuthInput)
++ {abstract}String getUserName()
+}
+class com.designing.bookmyshow.model.Theatre {
+- String theatreName
+- List<Screen> screenList
+- List<Show> showList
++ void addShow(Show)
++ String getTheatreName()
++ List<Screen> getScreenList()
++ List<Show> getShowList()
+}
+
+
+com.designing.bookmyshow.model.Seat <|-- com.designing.bookmyshow.model.PremiumSeat
+com.designing.bookmyshow.model.Auth <|-- com.designing.bookmyshow.model.UserNamePasswordAuth
+com.designing.bookmyshow.model.AuthInput <|-- com.designing.bookmyshow.model.UserNamePasswordInput
+com.designing.bookmyshow.model.Seat <|-- com.designing.bookmyshow.model.RegularSeat
+com.designing.bookmyshow.model.Person <|-- com.designing.bookmyshow.model.Customer
+@enduml

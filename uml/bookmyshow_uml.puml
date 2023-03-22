@@ -1,0 +1,65 @@
+@startuml
+interface com.designing.bookmyshow.model.Search {
++ List<Show> searchByTitle()
++ List<Show> searchByLanguage()
++ List<Show> searchByCity()
+}
+class com.designing.bookmyshow.model.UserNamePasswordInput {
+- char[] password
++ char[] getPassword()
++ void setPassword(char[])
+}
+class com.designing.bookmyshow.model.UserNamePasswordAuth {
+- UserNamePasswordInput userNamePasswordInput
++ boolean validateAccount(AuthInput)
++ String getUserName()
+}
+class com.designing.bookmyshow.model.Address {
+~ String addressLine1
+~ String addressLine2
+~ String city
++ String getAddressLine1()
++ void setAddressLine1(String)
++ String getAddressLine2()
++ void setAddressLine2(String)
++ String getCity()
++ void setCity(String)
+}
+class com.designing.bookmyshow.model.Show {
+}
+abstract class com.designing.bookmyshow.model.AuthInput {
+- String userName
++ String getUserName()
+}
+class com.designing.bookmyshow.model.Customer {
++ void makeBooking()
++ void getBooking()
+}
+class com.designing.bookmyshow.model.Person {
+- String name
+- Address address
+- String email
+- String phone
+- Auth auth
++ boolean validatePerson(AuthInput)
++ void setName(String)
++ Address getAddress()
++ void setAddress(Address)
++ String getEmail()
++ void setEmail(String)
++ String getPhone()
++ void setPhone(String)
++ String getName()
++ String getUserName()
+}
+abstract class com.designing.bookmyshow.model.Auth {
+- AuthInput authInput
++ {abstract}boolean validateAccount(AuthInput)
++ {abstract}String getUserName()
+}
+
+
+com.designing.bookmyshow.model.AuthInput <|-- com.designing.bookmyshow.model.UserNamePasswordInput
+com.designing.bookmyshow.model.Auth <|-- com.designing.bookmyshow.model.UserNamePasswordAuth
+com.designing.bookmyshow.model.Person <|-- com.designing.bookmyshow.model.Customer
+@enduml
