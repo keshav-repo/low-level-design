@@ -1,4 +1,4 @@
-package com.designing.bookmyshow.repository;
+package com.designing.bookmyshow.utility;
 
 public enum MovieList {
     BAHUBALI, AVENGER

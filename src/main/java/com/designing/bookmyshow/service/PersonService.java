@@ -15,6 +15,10 @@ public class PersonService {
         return customer;
     }
 
+    public Customer getCustomer(String userName){
+        return (Customer) customerMap.get(userName);
+    }
+
     public boolean validateCustomer(AuthInput authInput){
         Customer customer = (Customer) customerMap.get(authInput.getUserName());
         return customer.validatePerson(authInput);

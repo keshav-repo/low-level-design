@@ -1,6 +1,8 @@
 package com.designing.bookmyshow.model;
 
 public class Person {
+
+    private static int incrementer = 1;
     private String name;
     private Address address;
     private String email;

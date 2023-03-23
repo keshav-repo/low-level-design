@@ -1,4 +1,4 @@
-package com.designing.bookmyshow.repository;
+package com.designing.bookmyshow.service;
 
 import com.designing.bookmyshow.model.Movie;
 import com.designing.bookmyshow.model.Screen;

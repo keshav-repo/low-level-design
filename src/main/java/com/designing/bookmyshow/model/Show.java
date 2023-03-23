@@ -1,6 +1,7 @@
 package com.designing.bookmyshow.model;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Show {
@@ -9,19 +10,22 @@ public class Show {
     private LocalDateTime createdOn;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private String  screenId;
+    private String screenId;
     private String movieId;
-    private String  theatreId;
+    private String theatreId;
     private List<String> bookingIdList;
+    private List<String> bookedSeatIdList;
 
-    public Show(LocalDateTime startTime, LocalDateTime endTime, String movieId,String screenId, String theatreId) {
-        this.showId = "SHOW "+incrementer++;
+    public Show(LocalDateTime startTime, LocalDateTime endTime, String movieId, String screenId, String theatreId) {
+        this.showId = "SHOW " + incrementer++;
         this.startTime = startTime;
         this.endTime = endTime;
         createdOn = LocalDateTime.now();
         this.movieId = movieId;
         this.screenId = screenId;
         this.theatreId = theatreId;
+        this.bookingIdList = new LinkedList<>();
+        this.bookedSeatIdList = new LinkedList<>();
     }
 
     public String getScreenId() {
@@ -58,5 +62,12 @@ public class Show {
 
     public String getShowId() {
         return showId;
+    }
+
+    public List<String> getBookingIdList() {
+        return bookingIdList;
+    }
+    public void addBookingIdList(String bookingId) {
+        this.bookingIdList.add(bookingId);
     }
 }

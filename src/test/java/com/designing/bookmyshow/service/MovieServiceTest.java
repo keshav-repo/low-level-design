@@ -1,9 +1,11 @@
-package com.designing.bookmyshow.repository;
+package com.designing.bookmyshow.service;
 
 import com.designing.bookmyshow.model.Movie;
 import com.designing.bookmyshow.model.SeatType;
 import com.designing.bookmyshow.model.Show;
 import com.designing.bookmyshow.model.Theatre;
+import com.designing.bookmyshow.utility.MovieList;
+import com.designing.bookmyshow.utility.TheatreList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +19,9 @@ public class MovieServiceTest {
 
     private MovieService movieService;
     private TheatreService theatreService;
+    private LockService lockService;
+
+    private PersonService personService;
 
     private Movie bahubali;
     private Movie avengers;
@@ -27,7 +32,9 @@ public class MovieServiceTest {
     @BeforeEach
     public void setup() {
         movieService = new MovieService();
-        theatreService = new TheatreService();
+        lockService = new InMemoryLockService(5);
+        personService = new PersonService();
+        theatreService = new TheatreService(lockService, personService, movieService);
 
         // add movie bahubali and avengers
         bahubali = movieService.createMovie(MovieList.BAHUBALI.toString(), 190);
