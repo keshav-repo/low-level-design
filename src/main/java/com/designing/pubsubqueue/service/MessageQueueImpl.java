@@ -3,22 +3,26 @@ package com.designing.pubsubqueue.service;
 import com.designing.pubsubqueue.model.Message;
 import com.designing.pubsubqueue.model.Topic;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class MessageQueueImpl implements MessageQueue {
 
+    private String messageQueueId;
+
     private final Map<String, Topic> topicMap;
     private final Map<String, Publisher> publisherMap;
     private final Map<String, Consumer> consumerMap;
+
+    private final Map<String, Map<String, SubscriberWorker>> topicSubscriberWorkerMapping;
 
     public MessageQueueImpl() {
         topicMap = new HashMap<>();
         publisherMap = new HashMap<>();
         consumerMap = new HashMap<>();
+        topicSubscriberWorkerMapping = new HashMap<>();
+        messageQueueId = UUID.randomUUID().toString();
     }
 
     @Override
@@ -67,11 +71,44 @@ public class MessageQueueImpl implements MessageQueue {
 
     @Override
     public void consoleMessage(String subscriberId, String topicId) {
-        Consumer consumer = consumerMap.get(subscriberId);
-        if (!consumer.getSubscribedTopicIds().contains(topicId)) {
-            throw new RuntimeException("topic not subscribed");
+        if (!topicSubscriberWorkerMapping.containsKey(topicId)) {
+            topicSubscriberWorkerMapping.put(topicId, new HashMap<>());
         }
-        Topic topic = topicMap.get(topicId);
+        Map<String, SubscriberWorker> subscriberWorkerMap = topicSubscriberWorkerMapping.get(topicId);
+        if (!subscriberWorkerMap.containsKey(subscriberId)) {
+            Topic topic = topicMap.get(topicId);
+            Consumer consumer = consumerMap.get(subscriberId);
+            subscriberWorkerMap.put(subscriberId, new SubscriberWorker(topic, consumer));
+        }
+        SubscriberWorker subscriberWorker = subscriberWorkerMap.get(subscriberId);
+        new Thread(subscriberWorker).start();
+
+//        Consumer consumer = consumerMap.get(subscriberId);
+//        if (!consumer.getSubscribedTopicIds().contains(topicId)) {
+//            throw new RuntimeException("topic not subscribed");
+//        }
+//        Topic topic = topicMap.get(topicId);
+//        topic.getMessageList();
+
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MessageQueueImpl that = (MessageQueueImpl) o;
+        return messageQueueId.equals(that.messageQueueId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(messageQueueId);
+    }
+
+    @Override
+    public String toString() {
+        return "MessageQueueImpl{" +
+                "messageQueueId='" + messageQueueId + '\'' +
+                '}';
+    }
 }

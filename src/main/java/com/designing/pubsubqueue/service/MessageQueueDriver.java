@@ -1,36 +1,26 @@
-package com.designing.pubsubqueue.model;
+package com.designing.pubsubqueue.service;
 
-import com.designing.pubsubqueue.service.Consumer;
-import com.designing.pubsubqueue.service.MessageQueue;
-import com.designing.pubsubqueue.service.MessageQueueImpl;
-import com.designing.pubsubqueue.service.Publisher;
-import org.junit.jupiter.api.Test;
+import com.designing.pubsubqueue.model.Message;
+import com.designing.pubsubqueue.model.Topic;
 
 import java.util.List;
+import java.util.Scanner;
 
-public class MessageQueueImplTest {
+public class MessageQueueDriver {
+    public static void main(String[] args) throws InterruptedException{
+        MessageQueue messageQueue = new MessageQueueImpl();
+        Topic topic = messageQueue.addNewTopic("location");
 
-    private final MessageQueue messageQueue;
-    private Topic topic;
-    public MessageQueueImplTest() {
-        messageQueue = new MessageQueueImpl();
-        topic = messageQueue.addNewTopic("location");
-    }
-
-
-
-    @Test
-    public void test() throws InterruptedException {
         Publisher publisher = messageQueue.addPublisher();
 
         messageQueue.publishMessage(topic.getTopicId(), publisher.getid(), new Message("10.093587,77.570075"));
         messageQueue.publishMessage(topic.getTopicId(), publisher.getid(), new Message("11.093587,77.570075"));
         messageQueue.publishMessage(topic.getTopicId(), publisher.getid(), new Message("12.093587,77.570075"));
-        messageQueue.publishMessage(topic.getTopicId(), publisher.getid(), new Message("13.093587,77.570075"));
-        messageQueue.publishMessage(topic.getTopicId(), publisher.getid(), new Message("14.093587,78.570075"));
-        messageQueue.publishMessage(topic.getTopicId(), publisher.getid(), new Message("15.093587,79.570075"));
-        messageQueue.publishMessage(topic.getTopicId(), publisher.getid(), new Message("16.093587,78.570075"));
-        messageQueue.publishMessage(topic.getTopicId(), publisher.getid(), new Message("17.093587,79.570075"));
+//        messageQueue.publishMessage(topic.getTopicId(), publisher.getid(), new Message("13.093587,77.570075"));
+//        messageQueue.publishMessage(topic.getTopicId(), publisher.getid(), new Message("14.093587,78.570075"));
+//        messageQueue.publishMessage(topic.getTopicId(), publisher.getid(), new Message("15.093587,79.570075"));
+//        messageQueue.publishMessage(topic.getTopicId(), publisher.getid(), new Message("16.093587,78.570075"));
+//        messageQueue.publishMessage(topic.getTopicId(), publisher.getid(), new Message("17.093587,79.570075"));
 
         List<String> meStringList = messageQueue.getAllMessage(topic.getTopicId());
 
@@ -39,7 +29,7 @@ public class MessageQueueImplTest {
 
         Thread.sleep(1100);
         // after one second, all the message is populated
-       // System.out.println(messageQueue.getAllMessage(topic.getTopicId()));
+        System.out.println(messageQueue.getAllMessage(topic.getTopicId()));
 
         Consumer consumer1 = messageQueue.addConsumer();
         Consumer consumer2 = messageQueue.addConsumer();
@@ -53,9 +43,10 @@ public class MessageQueueImplTest {
         messageQueue.consoleMessage(consumer2.getid(), topic.getTopicId());
         messageQueue.consoleMessage(consumer3.getid(), topic.getTopicId());
 
-        Thread.sleep(10000);
+        Thread.sleep(4000);
         System.out.println("after consuming message from all subscriber");
         messageQueue.consoleMessage(consumer1.getid(), topic.getTopicId());
-    }
 
+
+    }
 }
