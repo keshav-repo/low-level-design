@@ -5,6 +5,8 @@ import com.designing.pubsubqueue.model.Topic;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class MessageQueueImpl implements MessageQueue {
@@ -17,12 +19,15 @@ public class MessageQueueImpl implements MessageQueue {
 
     private final Map<String, Map<String, SubscriberWorker>> topicSubscriberWorkerMapping;
 
+    private final ExecutorService executor;
+
     public MessageQueueImpl() {
         topicMap = new HashMap<>();
         publisherMap = new HashMap<>();
         consumerMap = new HashMap<>();
         topicSubscriberWorkerMapping = new HashMap<>();
         messageQueueId = UUID.randomUUID().toString();
+        this.executor = Executors.newFixedThreadPool(6); //.newFixedThreadPool();
     }
 
     @Override
@@ -52,7 +57,15 @@ public class MessageQueueImpl implements MessageQueue {
         // System.out.println("current Thread: "+Thread.currentThread().getName());
         Publisher publisher = publisherMap.get(publisherId);
         PublisherWorker publisherWorker = new PublisherWorker(topic, message);
+        executor.submit(()->{
+           // publisherWorker
+        });
         new Thread(publisherWorker).start();
+        // notify the worker that new message is added
+        if(topicSubscriberWorkerMapping.containsKey(topicId) && topicSubscriberWorkerMapping.get(topicId).containsKey(publisherId)){
+           SubscriberWorker subscriberWorker = topicSubscriberWorkerMapping.get(topicId).get(publisherId);
+           subscriberWorker.notify();
+        }
     }
 
     @Override
@@ -67,19 +80,29 @@ public class MessageQueueImpl implements MessageQueue {
         topic.addSubscriberList(consumerMap.get(subscriberId));
         Consumer consumer = consumerMap.get(subscriberId);
         consumer.addTopicId(topicId);
-    }
 
-    @Override
-    public void consoleMessage(String subscriberId, String topicId) {
         if (!topicSubscriberWorkerMapping.containsKey(topicId)) {
             topicSubscriberWorkerMapping.put(topicId, new HashMap<>());
         }
         Map<String, SubscriberWorker> subscriberWorkerMap = topicSubscriberWorkerMapping.get(topicId);
         if (!subscriberWorkerMap.containsKey(subscriberId)) {
-            Topic topic = topicMap.get(topicId);
-            Consumer consumer = consumerMap.get(subscriberId);
             subscriberWorkerMap.put(subscriberId, new SubscriberWorker(topic, consumer));
         }
+    }
+
+    @Override
+    public void consoleMessage(String subscriberId, String topicId) {
+//        if (!topicSubscriberWorkerMapping.containsKey(topicId)) {
+//            topicSubscriberWorkerMapping.put(topicId, new HashMap<>());
+//        }
+//        Map<String, SubscriberWorker> subscriberWorkerMap = topicSubscriberWorkerMapping.get(topicId);
+//        if (!subscriberWorkerMap.containsKey(subscriberId)) {
+//            Topic topic = topicMap.get(topicId);
+//            Consumer consumer = consumerMap.get(subscriberId);
+//            subscriberWorkerMap.put(subscriberId, new SubscriberWorker(topic, consumer));
+//        }
+
+        Map<String, SubscriberWorker> subscriberWorkerMap = topicSubscriberWorkerMapping.get(topicId);
         SubscriberWorker subscriberWorker = subscriberWorkerMap.get(subscriberId);
         new Thread(subscriberWorker).start();
 
