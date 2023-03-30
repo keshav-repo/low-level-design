@@ -10,10 +10,8 @@ public class ParkingLotServiceImpl implements ParkingLotService {
 
     private ParkingLot parkingLot;
 
-    private List<Slot> bookedSlot;
-
     public ParkingLotServiceImpl() {
-        bookedSlot = new CopyOnWriteArrayList<>();
+
     }
 
     @Override
