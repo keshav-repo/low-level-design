@@ -1,6 +1,6 @@
 package com.designing.parkinglot.service;
 
-import com.designing.exception.AllSlotsBookedException;
+import com.designing.parkinglot.exception.AllSlotsBookedException;
 import com.designing.parkinglot.model.*;
 import com.designing.parkinglot.service.impl.ParkingLotServiceImpl;
 import org.junit.jupiter.api.Test;

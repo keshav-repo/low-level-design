@@ -1,12 +1,11 @@
 package com.designing.parkinglot.model;
 
-import com.designing.exception.AllSlotsBookedException;
+import com.designing.parkinglot.exception.AllSlotsBookedException;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ParkingLot {
     private String parkingSlotId;
