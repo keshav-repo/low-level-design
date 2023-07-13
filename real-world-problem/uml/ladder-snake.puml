@@ -1,0 +1,56 @@
+@startuml
+class com.designing.snakeladder.models.Jump {
+- Cell startPos
+- Cell endPos
++ Cell getStartPos()
++ Cell getEndPos()
+}
+class com.designing.snakeladder.models.NormalDice {
+~ Random random
++ int rollDice()
+}
+class com.designing.snakeladder.models.Board {
+- List<Cell> cellList
+- List<Jump> snakeList
+- List<Jump> ladderList
+~ Map<Integer,Jump> snakeLadderMap
++ List<Cell> getCellList()
++ void addSnake(Cell,Jump)
++ void addLadder(Cell,Jump)
++ Cell moveForward(Cell,int)
++ Cell moveBackward(Cell,int)
++ boolean ifSnakeOrLadderPresent(Cell)
++ Cell bitOrClimb(Cell)
+}
+class com.designing.snakeladder.models.Player {
+- Cell currentPos
++ Cell moveForward(int)
++ Cell moveBackWard(int)
++ Cell getPos()
++ Cell setPos(Cell)
+}
+class com.designing.snakeladder.models.Game {
+- Board board
+- Queue<Player> playerList
+- List<Jump> snakeList
+- List<Jump> ladderList
+- Dice dice
+- int v
++ void addPlayerList(Player)
++ Cell movePlayer(Player)
+}
+class com.designing.snakeladder.models.Cell {
+- int cellNumer
+~ {static} Map<Integer,Cell> cache
++ int getCellNumer()
++ Cell moveForward(int)
++ Cell moveBackward(int)
++ {static} Cell valueOf(int)
+}
+interface com.designing.snakeladder.models.Dice {
++ int rollDice()
+}
+
+
+com.designing.snakeladder.models.Dice <|.. com.designing.snakeladder.models.NormalDice
+@enduml

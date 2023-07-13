@@ -353,7 +353,7 @@ The Liskov Substitution Principle is upheld in this example because we can subst
 By adhering to the Liskov Substitution Principle, we ensure that our object-oriented designs are more robust and maintainable, as objects can be replaced with their subtypes seamlessly, enabling polymorphism and reducing dependencies on specific implementations.
 
 ### Interface Segregation Principle
-The Interface Segregation Principle (ISP) states that clients should not be forced to depend on interfaces they do not use. It emphasizes creating specific interfaces tailored to the needs of clients, rather than having a single, monolithic interface that encompasses all possible behaviors. By following this principle, we can avoid unnecessary dependencies and minimize the impact of changes in the system.
+The Interface Segregation Principle (ISP) states that clients should not be forced to depend on interfaces they do not use. **It emphasizes creating specific interfaces tailored to the needs of clients, rather than having a single, monolithic interface that encompasses all possible behaviors.** By following this principle, we can avoid unnecessary dependencies and minimize the impact of changes in the system.
 
 Let's consider an example where we have a `Printer` interface that defines various print-related methods. However, different clients have different requirements and might not need all the methods provided by the `Printer` interface. To adhere to the Interface Segregation Principle, we can break down the interface into smaller, more focused interfaces based on client needs.
 
