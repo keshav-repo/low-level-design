@@ -19,6 +19,6 @@ public class DecoratorDesignMain {
         Product doubleDecoratedProduct = new GiftWrapProductDecorator(decoratedProduct, 5.0);
         System.out.println("Name: " + doubleDecoratedProduct.getName());
         System.out.println("Price: " + doubleDecoratedProduct.getPrice());
+
     }
 }
-
