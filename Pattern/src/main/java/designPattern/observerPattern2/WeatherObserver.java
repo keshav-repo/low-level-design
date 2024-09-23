@@ -1,9 +1,7 @@
 package designPattern.observerPattern2;
 
-
-
 import java.util.ArrayList;
-        import java.util.List;
+import java.util.List;
 
 // Subject (Observable)
 interface Subject {
@@ -16,7 +14,6 @@ interface Subject {
 class WeatherStation implements Subject {
     private List<Observer> observers = new ArrayList<>();
     private int temperature;
-
     public void setTemperature(int temperature) {
         this.temperature = temperature;
         notifyObservers();
@@ -34,6 +31,7 @@ class WeatherStation implements Subject {
 
     @Override
     public void notifyObservers() {
+        observers.forEach(observer -> observer.update(temperature));
         for (Observer observer : observers) {
             observer.update(temperature);
         }
